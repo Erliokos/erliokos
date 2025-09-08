@@ -45,6 +45,10 @@ export class AuthController {
     try {
       const { username, password } = req.body;
 
+      console.log('username', username);
+      console.log('password', password);
+      
+
       const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
       const user = result.rows[0];
 

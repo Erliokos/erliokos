@@ -38,24 +38,23 @@ const modelsDir = path.join(__dirname, '../models');
 app.use(cookieParser());
 
 app.use(cors({
-  origin: "https://localhost:3000", // Разрешаем запросы с фронтенда
-  credentials: true,               // Если нужны куки/авторизация
+  origin: "http://localhost:3000", // Фронтенд URL
+  credentials: true,               // Разрешаем куки и авторизацию
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Все необходимые методы
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'] // Разрешенные заголовки
 }));
+
+// ✅ Обработка preflight запросов
+app.options('*', cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
+
+
 
 app.get('/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(swaggerDocs);
-});
-
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  next();
 });
 
 // Подключение Swagger UI для отображения документации
