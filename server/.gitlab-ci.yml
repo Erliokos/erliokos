@@ -1,0 +1,21 @@
+stages:
+  - build
+  - deploy
+
+
+deploy:
+  stage: deploy
+  tags:
+    - dev
+  script:
+    - ls  # Просмотр содержимого папки
+    - cp -r . /var/www/shop-server/
+    - cd /var/www/shop-server/
+    - ls
+    - npm -v
+    - npm i
+    - npm run build
+    - docker-compose down -v
+    - docker-compose up -d db
+    - pm2 stop my-server
+    - pm2 start dist/server.js --name my-server
