@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import svgr from 'vite-plugin-svgr';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react({
+  plugins: [svgr(), react({
     babel: {
       plugins: ['babel-plugin-styled-components'],
     },
@@ -27,6 +28,7 @@ export default defineConfig({
       'pages': path.resolve(__dirname, './src/pages'),
       'assets': path.resolve(__dirname, './src/assets'),
       'theme': path.resolve(__dirname, './src/theme'),
+      'hooks': path.resolve(__dirname, './src/hooks'),
     },
   },
 })

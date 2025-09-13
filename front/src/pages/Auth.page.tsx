@@ -1,4 +1,5 @@
 import { useAuth } from "api/auth/useAuth"
+import { useToast } from "components/Notifications/useToast"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthStore } from "store/authStore"
@@ -18,12 +19,20 @@ export const AuthPage: React.FC<AuthPageProps> = () => {
   const { login, isLoggingIn } = useAuth()
   const { isAuthenticated, error } = useAuthStore()
   const navigate = useNavigate()
+  const toast = useToast()
 
 
     useEffect(() => {
       if (isAuthenticated) {
+        console.log('YES');
+        toast.success('Вход выполнен успешно')
         navigate('/', { replace: true })
+        // setTimeout(() => {
+        //   navigate('/', { replace: true })
+        // }, 2000)
       }
+    // tost не должен обновляться
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAuthenticated, navigate])
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -32,7 +41,7 @@ export const AuthPage: React.FC<AuthPageProps> = () => {
   }
 
   return (
-    <Flex $alignItems="center" $justifyContent="center" minHeight="100vh">
+    <Flex $alignItems="center" $justifyContent="center" $bg={theme.colors.primary[100]} minHeight="100vh">
       <Card $variant="elevated" style={{ width: '400px' }}>
         <Text as="h1" $variant="h3" $bold mb={4} textAlign="center">
           Вход в систему

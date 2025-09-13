@@ -4,6 +4,9 @@ import { MainRouter } from './Router'
 import { ThemeProvider } from 'styled-components'
 import { theme } from './theme'
 import { GlobalStyles } from './globalStyle'
+import { NotificationProvider } from 'components/Notifications/NotificationContext'
+import { NotificationContainer } from 'components/Notifications/NotificationContainer'
+import { Layout } from 'components/Layout/Layout'
 
 const queryClient = new QueryClient()
 
@@ -11,10 +14,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <MainRouter />
-          <GlobalStyles />
-        </BrowserRouter>
+        <NotificationProvider>
+          <BrowserRouter>
+            <Layout>
+              <MainRouter />
+            </Layout>
+            <GlobalStyles />
+            <NotificationContainer />
+          </BrowserRouter>
+        </NotificationProvider>
       </ThemeProvider>
     </QueryClientProvider>
   )

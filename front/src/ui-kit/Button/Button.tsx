@@ -6,6 +6,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   $size?: 'sm' | 'md' | 'lg'
   $fullWidth?: boolean
   $isLoading?: boolean
+  $width?: string
+  $minwidth?: string
+  
 }
 
 const sizeStyles = {
@@ -83,11 +86,11 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   border: none;
   outline: none;
+  width: ${({ $width, $fullWidth }) => $fullWidth ? '100%' : $width || '100%'};
+  min-width: ${({ $minwidth }) => $minwidth || 'auto'};
 
   ${({ $size = 'md' }) => sizeStyles[$size]};
   ${({ $variant = 'primary' }) => variantStyles[$variant]};
-
-  width: ${({ $fullWidth }) => ($fullWidth ? '100%' : 'auto')};
 
   &:disabled {
     opacity: 0.6;

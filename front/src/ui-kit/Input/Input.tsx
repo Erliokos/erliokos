@@ -5,6 +5,8 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   $variant?: 'outline' | 'filled' | 'flushed'
   $size?: 'sm' | 'md' | 'lg'
   $hasError?: boolean
+  $width?: string
+  $minwidth?: string
 }
 
 const sizeStyles = {
@@ -55,7 +57,8 @@ const variantStyles = {
 }
 
 export const Input = styled.input<InputProps>`
-  width: 100%;
+  width: ${({ $width }) => $width || '100%'};
+  min-width: ${({ $minwidth }) => $minwidth || 'auto'};
   border-radius: ${({ theme }) => theme.radii.md};
   transition: all 0.2s ease-in-out;
   outline: none;

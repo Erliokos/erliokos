@@ -7,7 +7,6 @@ import {
   color,
   type ColorProps
 } from 'styled-system'
-import { theme } from 'theme'
 
 export interface TextProps extends TypographyProps, SpaceProps, ColorProps {
   $variant?: 'body' | 'caption' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
@@ -77,6 +76,6 @@ export const Text = styled.span<TextProps>`
 `
 
 Text.defaultProps = {
-  $variant: 'body',
-  color: theme.colors.white
+  $variant: 'h1',
+  color: 'red'
 }

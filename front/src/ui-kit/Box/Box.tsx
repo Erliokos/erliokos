@@ -16,6 +16,7 @@ export interface BoxProps extends MarginProps, PaddingProps, LayoutProps {
   $flexWrap?: string
   $gap?: string
   $bg?: string
+  $opacity?: string
 }
 
 export const Box = styled.div<BoxProps>`
@@ -26,6 +27,7 @@ export const Box = styled.div<BoxProps>`
   flex-wrap: ${({ $flexWrap }) => $flexWrap};
   gap: ${({ $gap }) => $gap};
   background: ${({ $bg }) => $bg};
+  opacity: ${({ $opacity }) => $opacity};
 
   ${margin}
   ${padding}
