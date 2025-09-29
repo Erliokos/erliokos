@@ -13,9 +13,7 @@ export const authApi = {
 
   // Логин
   login: async (data: LoginData): Promise<AuthResponse> => {
-    console.log(data, 'HELLO');
     const response = await client.post<AuthResponse>('/auth/login', data);
-    
     
     if (response.data.accessToken) {
       localStorage.setItem('accessToken', response.data.accessToken);

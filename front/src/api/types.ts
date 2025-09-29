@@ -28,11 +28,21 @@ export interface LoginData {
 export interface RegisterData {
   password: string;
   username: string;
+  email: string;
 }
 
 export interface User {
   id: string;
   username: string;
+  email?: string;
+  avatar_url?: string;
+  level?: number;
+  xp?: number;
+  gold?: number;
+  created_at: number;
+  last_login?: number;
+  is_banned?: boolean
+  role?: string
 }
 
 export interface AuthResponse {

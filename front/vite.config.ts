@@ -29,6 +29,7 @@ export default defineConfig({
       'assets': path.resolve(__dirname, './src/assets'),
       'theme': path.resolve(__dirname, './src/theme'),
       'hooks': path.resolve(__dirname, './src/hooks'),
+      'globalStyle': path.resolve(__dirname, './src/globalStyle.ts'),
     },
   },
 })

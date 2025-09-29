@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { LoginData, RegisterData, User } from '../types';
 import { authApi } from './auth';
 import { useAuthStore } from 'store/authStore';
+import { useToast } from 'components/Notifications/useToast';
 
 export const useAuth = () => {
   const queryClient = useQueryClient();
@@ -14,6 +15,8 @@ export const useAuth = () => {
     setError,
     clearAuth
   } = useAuthStore();
+
+  const toast = useToast()
 
   // Запрос для получения текущего пользователя
   const userQuery = useQuery<User>({
@@ -43,11 +46,13 @@ export const useAuth = () => {
     },
     onSuccess: (userData) => {
       console.log('ЗАРЕГИСТРИРОВАН', userData);
+      toast.success('Вход выполнен успешно')
       setUser(userData);
       setLoading(false);
       queryClient.setQueryData(['user'], userData);
     },
     onError: (error: Error) => {
+      toast.error(error.message)
       setError(error.message);
       setLoading(false);
       clearAuth();

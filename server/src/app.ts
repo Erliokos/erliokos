@@ -4,6 +4,8 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 import authRoutes from './routes/auth.routes';
+import userRoutes from './routes/user.routes';
+import path from 'path';
 
 const app = express();
 
@@ -40,7 +42,7 @@ app.options('*', cors({
   credentials: true
 }));
 
-
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 app.get('/swagger.json', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -50,6 +52,7 @@ app.get('/swagger.json', (req, res) => {
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(express.json());
 app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
 
 
 export default app;

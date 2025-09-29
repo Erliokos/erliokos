@@ -1,19 +1,37 @@
-import { useIsDesktop } from "hooks/responceve"
-import { Link } from "react-router-dom"
-import { styled } from "styled-components"
+import { useState } from 'react'
+import { useIsDesktop } from 'hooks/responceve'
+import { Link } from 'react-router-dom'
+import { styled } from 'styled-components'
 import BurgerIcon from 'assets/svg/burger.svg?react'
+import { Icon } from 'globalStyle'
+import { MobileMenu } from 'components/MobileMenu/MobileMenu'
 
 
-export  function LeftMenu() {
-
-  const isDesktop = useIsDesktop()
+export function LeftMenu() {
   
+  const isDesktop = useIsDesktop()
+
+  
+  
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const closeMenu = () => setIsMenuOpen(false)
+
   return (
     <LeftMenuContainer>
-      {!isDesktop && <Icon as={BurgerIcon} />}
+      {!isDesktop && (
+        <>
+          <BurgerButton onClick={toggleMenu}>
+            <Icon as={BurgerIcon} />
+          </BurgerButton>
+          <MobileMenu onClose={closeMenu} isMenuOpen={isMenuOpen} />
+        </>
+      )}
       {isDesktop && (
         <>
-          <Link to="/game">Мои игры</Link>
+          <Link to="/">Главная</Link>
+          <div>/</div>
+          <Link to="/game">Игры</Link>
           <div>/</div>
           <Link to="/constructor">Конструктор игр</Link>
         </>
@@ -22,21 +40,22 @@ export  function LeftMenu() {
   )
 }
 
+// Стили
 const LeftMenuContainer = styled.div`
   display: flex;
-  flex: 1;
   justify-content: flex-start;
   align-items: center;
   padding: 0 ${({ theme }) => theme.space[2]};
   gap: 10px;
 `
 
-const Icon = styled.svg`
-  stroke: ${({ theme }) => theme.colors.primary[900]};
-  height: 30px;
-  width: 30px;
-  :hover {
-    stroke: ${({ theme }) => theme.colors.primary[500]};
-  }
+const BurgerButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 

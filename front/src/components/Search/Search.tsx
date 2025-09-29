@@ -13,36 +13,31 @@ export function Search() {
     }
   
   return (
-    <form onSubmit={handleConnect}>
-      <Grid hasButton={roomId !== ''}>
-        <Input
-          value={roomId}
-          onChange={e => setRomId(e.target.value)}
-          placeholder="Введи ID комнаты"
-        />
+    <Form onSubmit={handleConnect} $hasButton={roomId !== ''}>
+      <Input value={roomId} onChange={(e) => setRomId(e.target.value)} placeholder="Введи ID комнаты" />
 
-        <ButtonWrap hasButton={roomId !== ''}>
-          {roomId !== '' && (
-            <Button type="submit" $variant="primary" $size="lg">
-              <Text $variant="caption">Войти</Text>
-            </Button>
-          )}
-        </ButtonWrap>
-      </Grid>
-    </form>
+      <ButtonWrap $hasButton={roomId !== ''}>
+        {roomId !== '' && (
+          <Button $height='47px' type="submit" $variant="primary">
+            <Text $variant="caption">Войти</Text>
+          </Button>
+        )}
+      </ButtonWrap>
+    </Form>
   )
 }
 
-const Grid = styled.div<{ hasButton: boolean }>`
+const Form = styled.form<{ $hasButton: boolean }>`
   flex: 1;
-  display: grid;
-  justify-content: center;
-  gap: ${({ hasButton }) => (hasButton ? '10px' : '0px')};
-  grid-template-columns: ${({ hasButton }) =>
-    hasButton ? '280px 70px' : '360px 0px'};
+  justify-content: flex-start;
+  display: flex;
+  gap: ${({ $hasButton }) => ($hasButton ? '10px' : '0px')};
   transition: 500ms;
 `
-const ButtonWrap = styled.div<{ hasButton: boolean }>`
-  opacity: ${({ hasButton }) => (hasButton ? '100%' : '0%')};
+const ButtonWrap = styled.div<{ $hasButton: boolean }>`
+  opacity: ${({ $hasButton }) => ($hasButton ? '100%' : '0%')};
   transition: 2000ms;
+  height: 47px;
 `
+
+

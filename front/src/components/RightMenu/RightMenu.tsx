@@ -16,6 +16,12 @@ export function RightMenu() {
 
   return (
     <RightMenuContainer>
+      <Link to="/friends">Друзья</Link>
+      <div>/</div>
+      <Link to="/favorites">Избранное</Link>
+      <div>/</div>
+      <Link to="/mygame">Мои игры</Link>
+      <div>/</div>
       <Link to="/profile">Профиль</Link>
       <div>/</div>
       <Link to="/" onClick={handleLogout}>
@@ -26,7 +32,6 @@ export function RightMenu() {
 }
 
 const RightMenuContainer = styled.div`
-  flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;

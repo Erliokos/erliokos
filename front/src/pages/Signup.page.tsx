@@ -1,4 +1,5 @@
 import { useAuth } from 'api/auth/useAuth'
+import { useUserByName } from 'api/user/useUser'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from 'store/authStore'
@@ -9,14 +10,20 @@ import { Flex } from 'ui-kit/Flex/Flex'
 import { FormField } from 'ui-kit/FormField/FormField'
 import { Text } from 'ui-kit/Text/Text'
 
-type AuthPageProps = object
+type SignUpProps = object
 
-export const AuthPage: React.FC<AuthPageProps> = () => {
+export const SignUp: React.FC<SignUpProps> = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const { login, isLoggingIn } = useAuth()
+  const [email, setEmail] = useState('')
+
+  const [errorName, setErrorName] = useState('')
+
+  const { register, isRegistering } = useAuth()
   const { isAuthenticated, error } = useAuthStore()
   const navigate = useNavigate()
+
+  const userByName = useUserByName(username, Boolean(username))
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -27,14 +34,22 @@ export const AuthPage: React.FC<AuthPageProps> = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Submit fired')
-    login({ username, password })
+    register({ username, password, email })
+  }
+
+  const handleBlurName = () => {
+    if(!userByName.data?.username) {
+      setErrorName('')
+      return
+    }
+    setErrorName('Такой пользователь сущевствует')
   }
 
   return (
     <Flex $alignItems="center" $justifyContent="center" $bg={theme.colors.primary[100]} $minHeight="100vh">
       <Card $variant="elevated" style={{ width: '400px' }}>
         <Text as="h1" $variant="h3" $bold mb={4} textAlign="center">
-          Вход в систему
+          Регистрация
         </Text>
 
         <form onSubmit={handleSubmit}>
@@ -44,6 +59,17 @@ export const AuthPage: React.FC<AuthPageProps> = () => {
               placeholder="Введите ваш username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              required
+              error={errorName}
+              onBlur={handleBlurName}
+            />
+
+            <FormField
+              label="Email"
+              type="email"
+              placeholder="Введите почту"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
             />
 
@@ -62,10 +88,10 @@ export const AuthPage: React.FC<AuthPageProps> = () => {
               </Text>
             )}
 
-            <Button type="submit" $variant="primary" $size="lg" $fullWidth $isLoading={isLoggingIn}>
-              {isLoggingIn ? 'Вход...' : 'Войти'}
+            <Button type="submit" $variant="primary" $size="lg" $fullWidth $isLoading={isRegistering}>
+              {isRegistering ? 'Регистрация...' : 'Зарегистрироваться'}
             </Button>
-            <Link to={'/registration'}>Регистрация</Link>
+            <Link to={'/login'}>Войти</Link>
           </Flex>
         </form>
       </Card>
