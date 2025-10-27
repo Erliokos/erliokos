@@ -2,18 +2,18 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 CREATE TABLE IF NOT EXISTS users (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),                     -- Уникальный ID игрока
-    username VARCHAR(50) UNIQUE NOT NULL,      -- Никнейм игрока
-    email VARCHAR(100),                        -- Почта игрока (может быть пустой)
-    password TEXT NOT NULL,               -- Хэш пароля
-    avatar_url TEXT,                           -- Ссылка на аватар
-    level INT DEFAULT 1,                       -- Уровень игрока
-    xp INT DEFAULT 0,                          -- Опыт игрока
-    gold INT DEFAULT 0,                        -- Виртуальная валюта
-    created_at TIMESTAMP DEFAULT now(),        -- Дата регистрации
-    last_login TIMESTAMP,                      -- Последний вход в игру
-    is_banned BOOLEAN DEFAULT FALSE,           -- Заблокирован ли аккаунт
-    role VARCHAR(20) DEFAULT 'player'          -- Роль пользователя (player, admin и т.д.)
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(), -- Уникальный ID игрока
+    username VARCHAR(50) UNIQUE NOT NULL,           -- Никнейм игрока
+    email VARCHAR(100) UNIQUE NOT NULL,             -- Почта игрока (может быть пустой)
+    password TEXT NOT NULL,                         -- Хэш пароля
+    avatar_url TEXT,                                -- Ссылка на аватар
+    level INT DEFAULT 1,                            -- Уровень игрока
+    xp INT DEFAULT 0,                               -- Опыт игрока
+    gold INT DEFAULT 0,                             -- Виртуальная валюта
+    created_at TIMESTAMP DEFAULT now(),             -- Дата регистрации
+    last_login TIMESTAMP,                           -- Последний вход в игру
+    is_banned BOOLEAN DEFAULT FALSE,                -- Заблокирован ли аккаунт
+    role VARCHAR(20) DEFAULT 'player'               -- Роль пользователя (player, admin и т.д.)
 );
 
 -- Создание таблицы category

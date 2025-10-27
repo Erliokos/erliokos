@@ -9,7 +9,7 @@ export class AuthController {
   // Регистрация
   static async register(req: Request, res: Response) {
     try {
-      const { username, password } = req.body;
+      const { username, password, email } = req.body;
 
       if (!username || !password) {
         return res.status(400).json({ message: "Username and password required" });
@@ -24,13 +24,22 @@ export class AuthController {
         return res.status(400).json({ message: "User already exists" });
       }
 
+      // Проверяем, есть ли пользователь
+      const existingUserEmail = await pool.query(
+        "SELECT * FROM users WHERE email = $1",
+        [email]
+      );
+      if (existingUserEmail.rows.length > 0) {
+        return res.status(400).json({ message: "This type of mail is used" });
+      }
+
       // Хешируем пароль
       const hashedPassword = await bcrypt.hash(password, 10);
 
       // Сохраняем в БД
       const newUser = await pool.query(
-        "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *",
-        [username, hashedPassword]
+        "INSERT INTO users (username, password, email, last_login) VALUES ($1, $2, $3, NOW()) RETURNING *",
+        [username, hashedPassword, email]
       );
 
       const user = { ...newUser.rows[0], password: undefined }

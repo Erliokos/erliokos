@@ -69,9 +69,11 @@ export const useAuth = () => {
     onSuccess: (userData) => {
       setUser(userData);
       setLoading(false);
+      toast.success('Регистрация прошла успешно')
       queryClient.setQueryData(['user'], userData);
     },
     onError: (error: Error) => {
+      toast.error(error.message)
       setError(error.message);
       setLoading(false);
       clearAuth();

@@ -14,7 +14,7 @@ const defaultUser: User = {
   created_at: Date.now(),
 }
 
-export function ProfilePage() {
+function ProfilePage() {
   const { user } = useAuthStore()
 
   const { updateAvatar } = useUser()
@@ -40,7 +40,7 @@ export function ProfilePage() {
           <UserInfoImage
             src={user.avatar_url ? `http://localhost:3001/${user.avatar_url}` : 'images/noname.png'}
           />
-          <Flex $gap="16px">
+          <Flex $alignItems='flex-end' $gap="16px">
             <Button $size="sm" $variant="outline">
               Редактировать профиль
             </Button>
@@ -49,11 +49,14 @@ export function ProfilePage() {
         <UserInfoText>
           {user &&
             userKeys.map((item) => {
+              if(item === 'avatar_url') return null
               return (
                 <UserInfoTextRow>
-                  <Text $variant="caption">{item}:</Text>
-                  <Text $bold $variant="body">
-                    {user[item]}
+                  <Text padding={'8px'} $variant="caption">
+                    {item}:
+                  </Text>
+                  <Text padding={'8px'} $bold $variant="body">
+                    {user[item]?.toString() ?? '-'}
                   </Text>
                 </UserInfoTextRow>
               )
@@ -63,6 +66,8 @@ export function ProfilePage() {
     </Container>
   )
 }
+
+export default ProfilePage
 
 const Container = styled.div`
   width: 100%;
@@ -90,12 +95,12 @@ const UserInfoImageContainer = styled.div`
   flex: 1;
   background: ${({ theme }) => theme.colors.secondary[100]};
   padding: 16px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 `
 
 const UserInfoImage = styled.img`
-  flex: 1;
   align-items: center;
   background: ${({ theme }) => theme.colors.secondary[100]};
   aspect-ratio: 1 / 1;

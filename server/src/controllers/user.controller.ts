@@ -22,7 +22,6 @@ export class UserController {
   static async getUserByName(req: Request, res: Response) {
     try {
       const { username } = req.params;
-      console.log(username);
       const result = await pool.query(
         "SELECT id, username, avatar_url FROM users WHERE username ILIKE $1",
         [username]

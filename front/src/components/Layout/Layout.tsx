@@ -19,9 +19,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Flex
       $flexDirection="column"
-      $gap={'16px'}
       $bg={theme.colors.primary[100]}
-      $alignItems="center"
+      $alignItems="stretch"
       $justifyContent="start"
       $minHeight="100vh"
     >
@@ -30,7 +29,7 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
         <Search />
         <RightMenu />
       </Container>
-      {children}
+      <ContentContainer>{children}</ContentContainer>
     </Flex>
   )
 }
@@ -42,4 +41,9 @@ const Container = styled.div`
   justify-content: center;
   padding: 16px;
   gap: 16px;
+`
+const ContentContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 `
